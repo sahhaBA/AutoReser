@@ -1,4 +1,0 @@
-da bi angular radio neophodno je instalirati sljedece:
-
-.angular
-node_modules

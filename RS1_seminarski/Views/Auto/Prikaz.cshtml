@@ -1,0 +1,66 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@using RS1_seminarski.Modelview
+
+
+@model AutomobiliPrikazWM
+
+
+
+
+    <style>
+
+        #D2 {
+            display: inline-block;
+        }
+    </style>
+
+
+
+
+
+
+    <div class="text-center">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+
+                    <th> Proizvođač </th>
+                    <th> Model </th>
+                    <th>  Kategorija  </th>
+                    <th>  Paket opreme   </th>
+                    <td>  Stanje </td>
+                    <th> Akcija </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var k in Model.AutoRows)
+                {
+                    <tr>
+
+                        <td> @k.Proizvodjac</td>
+                        <td> @k.Model</td>
+                        <td> @k.nazivKategorije</td>
+                        <td> @k.PaketOpremeNaziv</td>
+                        <th> @k.Zaliha</th>
+
+
+                        <td>
+                            <a class="btn btn-primary" href="/Auto/Uredi?ID=@k.AutomobilID"> Uredi </a>|
+                            <a class="btn btn-danger" href="/Auto/Obrisi?ID=@k.AutomobilID"> Obrisi </a>
+                        </td>
+                    </tr>
+
+                }
+
+            </tbody>
+
+
+        </table>
+    </div>
+    <a href="/Auto/Dodaj" class="btn btn-primary"> Dodaj</a>
+    <a id="D2" href="/Home/Index" class="btn btn-primary"> Home </a>

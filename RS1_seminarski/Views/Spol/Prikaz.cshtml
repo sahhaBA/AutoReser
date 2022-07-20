@@ -1,0 +1,50 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@using RS1_seminarski.Modelview
+
+
+@model SpolPrikazWM
+
+    <style>
+
+        #D2 {
+            display: inline-block;
+        }
+    </style>
+
+
+    <div class="text-center">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th> Spol ID </th>
+                    <th> Naziv  </th>
+                    <th> Akcija  </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var k in Model.SpolRow)
+                {
+                    <tr>
+                        <td> @k.SpolID</td>
+                        <td> @k.Naziv</td>
+                        <td>
+                            <a class="btn btn-primary" href="/Spol/Uredi?ID=@k.SpolID"> Uredi </a>|
+                            <a class="btn btn-danger" href="/Spol/Obrisi?ID=@k.SpolID"> Obrisi </a>
+                        </td>
+                    </tr>
+
+                }
+
+            </tbody>
+
+
+        </table>
+    </div>
+
+    <a href="/Spol/Dodaj" class="btn btn-primary"> Dodaj</a>
+    <a id="D2" href="/Home/Index" class="btn btn-primary"> Home </a>

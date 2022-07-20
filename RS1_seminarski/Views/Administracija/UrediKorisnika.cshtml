@@ -1,0 +1,301 @@
+﻿@model RS1_seminarski.Modelview.UrediKorisnikaVM;
+
+@{
+    ViewData["Title"] = "Uređivanje naloga";
+    var uposlenik = ViewBag.Uposlenik as string;
+}
+
+<h2>Uređivanje naloga</h2>
+
+<form method="post" class="mt-3">
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" asp-for="@Model.Id">
+
+        </label>
+        <div class="col-sm-10">
+            <input class="form-control" asp-for="@Model.Id" disabled />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" asp-for="@Model.DatumReg">
+            Datum registracije:
+        </label>
+        <div class="col-sm-10">
+            <input class="form-control" asp-for="@Model.DatumReg" disabled />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" asp-for="@Model.KorisnickoIme">
+            Korisničko ime:
+        </label>
+        <div class="col-sm-10">
+            <input type="text" asp-for="@Model.KorisnickoIme" value="@Model.KorisnickoIme" class="form-control" />
+            <span asp-validation-for="@Model.KorisnickoIme" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" asp-for="@Model.Email">
+            Email:
+        </label>
+        <div class="col-sm-10">
+            <input asp-for="@Model.Email" placeholder="Primjer@email.com" value="@Model.Email" class="form-control" />
+            <span asp-validation-for="@Model.Email" class="text-danger"></span>
+        </div>
+    </div>
+
+    <h4><span>Lični podaci</span></h4>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" asp-for="@Model.Ime">
+            Ime:
+        </label>
+        <div class="col-sm-10">
+            <input type="text" asp-for="@Model.Ime" placeholder="Ime" value="@Model.Ime" class="form-control" />
+            <span asp-validation-for="@Model.Ime" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" asp-for="@Model.Prezime">
+            Prezime:
+        </label>
+        <div class="col-sm-10">
+            <input type="text" asp-for="@Model.Prezime" placeholder="Prezime" value="@Model.Prezime" class="form-control" />
+            <span asp-validation-for="@Model.Prezime" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" asp-for="@Model.Spolstr">
+            Spol:
+        </label>
+        <div class="col-sm-10">
+            <select class="form-control" asp-items="@Model.Spolstr" asp-for="@Model.SpolstrID"></select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" asp-for="@Model.Adresa">
+            Adresa:
+        </label>
+        <div class="col-sm-10">
+            <input type="text" asp-for="@Model.Adresa" placeholder="Adresa" value="@Model.Adresa" class="form-control" />
+            <span asp-validation-for="@Model.Adresa" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" asp-for="@Model.GradNaziv">
+            Grad:
+        </label>
+        <div class="col-sm-10">
+            <input type="text" asp-for="@Model.GradNaziv" placeholder="Grad" value="@Model.GradNaziv" class="form-control" />
+            <span asp-validation-for="@Model.GradNaziv" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" asp-for="@Model.PostanskiBroj">
+            Poštanski broj:
+        </label>
+        <div class="col-sm-10">
+            <input type="text" asp-for="@Model.PostanskiBroj" placeholder="Postanski broj" value="@Model.PostanskiBroj" class="form-control" />
+            <span asp-validation-for="@Model.PostanskiBroj" class="text-danger"></span>
+        </div>
+    </div>
+
+    @if (uposlenik == "da")
+    {
+    <h4><span>Podaci o uposlenom</span></h4>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">
+            JMBG:
+        </label>
+        <div class="col-sm-10">
+            <input type="text" asp-for="@Model.JMBG" value="@Model.JMBG" class="form-control" />
+            <span asp-validation-for="@Model.JMBG" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">
+            Iskustvo (br. Godina):
+        </label>
+        <div class="col-sm-10">
+            <input type="text" value="@Model.Iskustvo" asp-for="@Model.Iskustvo" class="form-control" />
+            <span asp-validation-for="@Model.Iskustvo" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">
+            Staž (br. Godina):
+        </label>
+        <div class="col-sm-10">
+            <input type="text" value="@Model.MinuliStaz" asp-for="@Model.MinuliStaz" class="form-control" />
+            <span asp-validation-for="@Model.MinuliStaz" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">
+            Datum zaposlenja:
+        </label>
+        <div class="col-sm-10">
+            <input type="text" disabled asp-for="@Model.DatumZaposlenja" value="@Model.DatumZaposlenja" class="form-control" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">
+            Stručna sprema:
+        </label>
+        <div class="col-sm-10">
+            <select class="form-control proizvodjac str" asp-for="@Model.StrucnaSpremaID" asp-items="@Model.StrucnaSprema"></select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">
+            Nova stručna sprema:
+        </label>
+        <div class="col-sm-10">
+            <input type="text" required placeholder="Opcionalno" asp-for="@Model.NovaStrucnaSprema" class="form-control novaStr" />
+            <span asp-validation-for="@Model.NovaStrucnaSprema" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">
+            Radno mjesto:
+        </label>
+        <div class="col-sm-10">
+            <select class="form-control proizvodjac rmj" asp-for="@Model.RadnoMjestoID" asp-items="@Model.RadnoMjesto"></select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">
+            Novo radno mjesto:
+        </label>
+        <div class="col-sm-10">
+            <input type="text" required placeholder="Opcionalno" asp-for="@Model.NovoRadnoMjesto" class="form-control novakat novoRmj" />
+            <span asp-validation-for="@Model.NovoRadnoMjesto" class="text-danger"></span>
+        </div>
+    </div>
+    }
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-success">Spasi promjene</button>
+            <a asp-action="ListaKorisnika" class="btn btn-primary">Nazad</a>
+        </div>
+    </div>
+</form>
+
+<div class="card">
+    <div class="card-header">
+        <h3>Uloge</h3>
+    </div>
+    <div class="card-body">
+        @if (Model.Uloge.Any())
+        {
+            foreach(var uloga in Model.Uloge)
+            {
+                <h5 class="card-title">@uloga</h5>
+            }
+        }
+        else
+        {
+            <h5 class="card-title"> - </h5>
+        }
+    </div>
+    <div class="card-footer">
+        <a data-href="/Administracija/AzurirajKorisnickeUloge?Id=@Model.Id" style="width:auto; color: white; cursor: pointer;" class="btn btn-primary clickable-row">Ažuriraj uloge</a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h3>Mogućnosti</h3>
+    </div>
+    <div class="card-body">
+        @if (Model.Claims.Any())
+        {
+            foreach (var claim in Model.Claims)
+            {
+                <h5 class="card-title">@claim</h5>
+            }
+        }
+        else
+        {
+            <h5 class="card-title"> - </h5>
+        }
+    </div>
+    <div class="card-footer">
+        <a asp-action="AzurirajKorisnickeMogucnosti" asp-route-Id="@Model.Id" style="width:auto" class="btn btn-primary">Ažuriraj mogućnosti</a>
+    </div>
+</div>
+
+<script>
+    jQuery(document).ready(function ($) {
+        $(".clickable-row").click(function () {
+            window.location = $(this).data("href");
+        });
+    });
+
+    $(".novaStr").focus(function () {
+        $(".str").val("---");
+    });
+    $(".novaStr").focusout(function () {
+        $(".novaStr").prop('required', true);
+    });
+    $(".str").change(function () {
+        $(".novaStr").val("");
+
+        if ($(".str").find(":selected").text() != "---") {
+            $(".novaStr").prop('required', false);
+        }
+        else {
+            $(".novaStr").prop('required', true);
+        }
+    });
+
+    $(".novoRmj").focus(function () {
+        $(".rmj").val("---");
+    });
+    $(".novoRmj").focusout(function () {
+        $(".novoRmj").prop('required', true);
+    });
+    $(".rmj").change(function () {
+        $(".novoRmj").val("");
+
+        if ($(".rmj").find(":selected").text() != "---") {
+            $(".novoRmj").prop('required', false);
+        }
+        else {
+            $(".novoRmj").prop('required', true);
+        }
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

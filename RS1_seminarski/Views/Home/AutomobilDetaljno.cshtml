@@ -1,0 +1,857 @@
+@model RS1_seminarski.Modelview.AutomobilDetaljnoVM;
+@using Podaci.Entiteti;
+
+@inject SignInManager<KorisnickiNalog> signInManager;
+
+@{
+    ViewData["Title"] = Model.Proizvodjac + " " + Model.Model;
+    var Id = ViewBag.Id;
+    var pronadjen = ViewData["kljuc"] as string;
+    var znak = ViewData["znak"] as string;
+    var znak2 = ViewData["znak2"] as string;
+    var rezervacija = ViewData["rezervacija"] as string;
+    var AutoJeDodano = ViewData["AutoJeDodano"] as string;
+    var AutoJeUredjeno = ViewData["AutoJeUredjeno"] as string;
+    var AutoObrisan = ViewData["AutoObrisan"] as string;
+}
+
+<style>
+    body {
+        background-color: rgb(241,238,231);
+        display: flex;
+        flex-direction: column;
+    }
+
+    #sve {
+        height: 100%;
+        width: 100%;
+    }
+
+    #divSlika {
+        float: left;
+        width: 100%;
+    }
+
+    #sl1 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        width: 20%;
+        float: left;
+        border-right: 1px dotted grey;
+    }
+
+    #sl2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        width: 20%;
+        float: left;
+        border-right: 1px dotted grey;
+    }
+
+    #sl3 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        width: 20%;
+        float: left;
+        border-right: 1px dotted grey;
+    }
+
+    #sl4 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        width: 20%;
+        float: left;
+        border-right: 1px dotted grey;
+    }
+
+    #sl5 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        width: 20%;
+        float: left;
+    }
+
+    #sl1 img {
+        flex-shrink: 0;
+        min-width: 100%;
+        min-height: 100%
+    }
+
+    #sl2 img {
+        flex-shrink: 0;
+        min-width: 100%;
+        min-height: 100%
+    }
+
+    #sl3 img {
+        flex-shrink: 0;
+        min-width: 100%;
+        min-height: 100%
+    }
+
+    #sl4 img {
+        flex-shrink: 0;
+        min-width: 100%;
+        min-height: 100%
+    }
+
+    #sl5 img {
+        flex-shrink: 0;
+        min-width: 100%;
+        min-height: 100%
+    }
+
+    #Slika img {
+        flex-shrink: 0;
+        min-width: 100%;
+        min-height: 100%;
+        /*height: 500px;*/
+    }
+
+    #divInformacija {
+        float: left;
+        width: 100%;
+    }
+
+    #cijena {
+        /*background: linear-gradient(to bottom, rgb(156, 171, 78), white);*/
+        background: linear-gradient(to bottom, white 0%, white 40%, rgb(156, 171, 78) 40%, rgb(156, 171, 78) 100%);
+        margin: 0px 8px;
+        border: 1px solid rgb(156, 171, 78);
+    }
+
+    #cijena_label {
+        padding-bottom: 10px;
+        margin-bottom: 5px;
+    }
+
+    #cijena_cifra {
+        color: white;
+    }
+
+    #stanje {
+        /*background: linear-gradient(to bottom, rgb(156, 171, 78), white);*/
+        background: linear-gradient(to bottom, white 0%, white 40%, rgb(128, 128, 128) 40%, rgb(128, 128, 128) 100%);
+        margin: 0px 8px;
+        border: 1px solid rgb(128, 128, 128);
+    }
+
+    #stanje_N {
+        background: linear-gradient(to bottom, white 0%, white 40%, rgb(255, 106, 0) 40%, rgb(255, 106, 0) 100%);
+        margin: 0px 8px;
+        border: 1px solid rgb(255, 106, 0);
+    }
+
+    #stanje_label {
+        padding-bottom: 10px;
+        margin-bottom: 5px;
+    }
+
+    #stanje_cifra {
+        color: white;
+    }
+
+    #godiste {
+        /*background: linear-gradient(to bottom, rgb(156, 171, 78), white);*/
+        background: linear-gradient(to bottom, white 0%, white 40%, rgb(38, 106, 146) 40%, rgb(38, 106, 146) 100%);
+        margin: 0px 8px;
+        border: 1px solid rgb(38, 106, 146);
+    }
+
+    #godiste_label {
+        padding-bottom: 10px;
+        margin-bottom: 5px;
+    }
+
+    #godiste_cifra {
+        color: white;
+    }
+
+    #Transmisija {
+        /*background: linear-gradient(to bottom, rgb(156, 171, 78), white);*/
+        background: linear-gradient(to bottom, white 0%, white 40%, rgb(187, 189, 0) 40%, rgb(187, 189, 0) 100%);
+        margin: 0px 8px;
+        border: 1px solid rgb(187, 189, 0);
+    }
+
+    #Transmisija_label {
+        padding-bottom: 10px;
+        margin-bottom: 5px;
+    }
+
+    #Transmisija_cifra {
+        color: white;
+    }
+
+    #kilometraza {
+        /*background: linear-gradient(to bottom, rgb(156, 171, 78), white);*/
+        background: linear-gradient(to bottom, white 0%, white 40%, rgb(178, 59, 59) 40%, rgb(178, 59, 59) 100%);
+        margin: 0px 8px;
+        border: 1px solid rgb(178, 59, 59);
+    }
+
+    #kilometraza_label {
+        padding-bottom: 10px;
+        margin-bottom: 5px;
+    }
+
+    #kilometraza_cifra {
+        color: white;
+    }
+
+    #Informacije {
+        background-color: white;
+        float: left;
+        width: 51.5%;
+        padding: 10px;
+    }
+
+    #Slika1 img {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        float: left;
+        height: 360px;
+        border-left: 1px dotted grey;
+    }
+
+    #Slika2 img {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        float: left;
+        height: 360px;
+        border-left: 1px dotted grey;
+    }
+
+    #Slika3 img {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        float: left;
+        height: 360px;
+        border-left: 1px dotted grey;
+    }
+
+    #Slika4 img {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        float: left;
+        height: 360px;
+        border-left: 1px dotted grey;
+    }
+
+    #Slika5 img {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        float: left;
+        height: 360px;
+        border-left: 1px dotted grey;
+    }
+
+    #lijevi {
+        float: left;
+        width: 50%;
+    }
+
+    #desni {
+        float: right;
+        width: 50%;
+    }
+
+    #lijevi #polje {
+        border: 1px solid grey;
+        border-radius: 5px;
+        float: left;
+        width: 97%;
+        padding: 0px 10px;
+        background: linear-gradient(to right, rgba(128, 128, 128, 0.3), white);
+        /*background: linear-gradient(to right, white 0%, white 70%, rgba(128, 128, 128, 0.2) 70%, rgba(128, 128, 128, 0.2) 100%);*/
+    }
+
+    #desni #polje {
+        border: 1px solid grey;
+        border-radius: 5px;
+        float: right;
+        width: 97%;
+        padding: 0px 10px;
+        background: linear-gradient(to right, white, rgba(128, 128, 128, 0.3));
+        /*background: linear-gradient(to right, white 0%, white 70%, rgba(128, 128, 128, 0.2) 70%, rgba(128, 128, 128, 0.2) 100%);*/
+    }
+
+    #oprema {
+        border-bottom: 1px solid rgba(128, 128, 128, 0.3);
+        float: left;
+        width: 100%;
+        padding: 10px;
+        height: 100%;
+    }
+
+    .clear {
+        clear: both;
+    }
+
+    img {
+        object-fit: cover;
+        /*padding: 0px 5px;*/
+        width: 100%;
+        height: 150px;
+    }
+
+    #slikaidugme {
+        float: left;
+        width: 48.5%;
+    }
+
+    notifikacija {
+        float: left;
+        width: 100%;
+    }
+
+    #dugme {
+        color: white;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        float: right;
+    }
+
+    #dugme a {
+        flex-shrink: 0;
+        min-width: 100%;
+        min-height: 100%;
+        width: 100%;
+    }
+
+    #dugmeUrediOpremu {
+        width: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        float: left;
+        border: 1px dotted grey;
+    }
+
+    #dugmeUredi {
+        width: 75%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        float: left;
+        border: 1px dotted grey;
+    }
+
+    #dugmeObrisi {
+        width: 25%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        float: left;
+        border: 1px dotted grey;
+    }
+
+    #dugmeUrediBezBrisanja {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        float: left;
+        border: 1px dotted grey;
+    }
+
+    #dugmeObrisiBezUredjivanja {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        float: left;
+        border: 1px dotted grey;
+    }
+</style>
+
+<body>
+    <h3>@Model.Proizvodjac @Model.Model @Model.Karakteristike.Motor @Model.Karakteristike.Gorivo</h3>
+
+    <div id="sve">
+        <hr />
+        <div id="divSlika">
+            <div id="sl1">
+                <img src="~/Images/@Model.Slika1" alt="" />
+            </div>
+            <div id="sl2">
+                <img src="~/Images/@Model.Slika2" alt="" />
+            </div>
+            <div id="sl3">
+                <img src="~/Images/@Model.Slika3" alt="" />
+            </div>
+            <div id="sl4">
+                <img src="~/Images/@Model.Slika4" alt="" />
+            </div>
+            <div id="sl5">
+                <img src="~/Images/@Model.Slika5" alt="" />
+            </div>
+        </div>
+        <br />
+        <div id="divInformacija">
+            <br />
+            <div id="Informacije">
+                <oblique>Osnovne Informacije</oblique>
+                <br /><br />
+                <div id="Gornji">
+                    <div id="cijena" class="btn">
+                        <div id="cijena_label">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash" viewBox="0 0 16 16">
+                                <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" />
+                                <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z" />
+                            </svg> Cijena
+                        </div>
+                        <div id="cijena_cifra"><h5>@Model.Karakteristike.Cijena (KM)</h5></div>
+                    </div>
+                    @if (@Model.Karakteristike.Stanje == "Polovno")
+                    {
+                        <div id="stanje" class="btn">
+                            <div id="stanje_label">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-tags-fill" viewBox="0 0 16 16">
+                                    <path d="M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
+                                    <path d="M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z" />
+                                </svg> Stanje
+                            </div>
+                            <div id="stanje_cifra"><h5>@Model.Karakteristike.Stanje</h5></div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div id="stanje_N" class="btn">
+                            <div id="stanje_label">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-tags" viewBox="0 0 16 16">
+                                    <path d="M3 2v4.586l7 7L14.586 9l-7-7H3zM2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2z" />
+                                    <path d="M5.5 5a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm0 1a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM1 7.086a1 1 0 0 0 .293.707L8.75 15.25l-.043.043a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 0 7.586V3a1 1 0 0 1 1-1v5.086z" />
+                                </svg> Stanje
+                            </div>
+                            <div id="stanje_cifra"><h5>@Model.Karakteristike.Stanje</h5></div>
+                        </div>
+                    }
+                    <div id="godiste" class="btn">
+                        <div id="godiste_label">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+                                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
+                            </svg> Godiste
+                        </div>
+                        <div id="godiste_cifra"><h5>@Model.Karakteristike.Godiste</h5></div>
+                    </div>
+                    <div id="kilometraza" class="btn">
+                        <div id="kilometraza_label">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-speedometer2" viewBox="0 0 16 16">
+                                <path d="M8 4a.5.5 0 0 1 .5.5V6a.5.5 0 0 1-1 0V4.5A.5.5 0 0 1 8 4zM3.732 5.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707zM2 10a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 10zm9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5zm.754-4.246a.389.389 0 0 0-.527-.02L7.547 9.31a.91.91 0 1 0 1.302 1.258l3.434-4.297a.389.389 0 0 0-.029-.518z" />
+                                <path fill-rule="evenodd" d="M0 10a8 8 0 1 1 15.547 2.661c-.442 1.253-1.845 1.602-2.932 1.25C11.309 13.488 9.475 13 8 13c-1.474 0-3.31.488-4.615.911-1.087.352-2.49.003-2.932-1.25A7.988 7.988 0 0 1 0 10zm8-7a7 7 0 0 0-6.603 9.329c.203.575.923.876 1.68.63C4.397 12.533 6.358 12 8 12s3.604.532 4.923.96c.757.245 1.477-.056 1.68-.631A7 7 0 0 0 8 3z" />
+                            </svg> Kilometraza
+                        </div>
+                        <div id="kilometraza_cifra"><h5>@Model.Karakteristike.Kilometraza (km)</h5></div>
+                    </div>
+                    @*<div id="Transmisija" class="btn">
+                        <div id="Transmisija_label">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-joystick" viewBox="0 0 16 16">
+                                <path d="M10 2a2 2 0 0 1-1.5 1.937v5.087c.863.083 1.5.377 1.5.726 0 .414-.895.75-2 .75s-2-.336-2-.75c0-.35.637-.643 1.5-.726V3.937A2 2 0 1 1 10 2z" />
+                                <path d="M0 9.665v1.717a1 1 0 0 0 .553.894l6.553 3.277a2 2 0 0 0 1.788 0l6.553-3.277a1 1 0 0 0 .553-.894V9.665c0-.1-.06-.19-.152-.23L9.5 6.715v.993l5.227 2.178a.125.125 0 0 1 .001.23l-5.94 2.546a2 2 0 0 1-1.576 0l-5.94-2.546a.125.125 0 0 1 .001-.23L6.5 7.708l-.013-.988L.152 9.435a.25.25 0 0 0-.152.23z" />
+                            </svg> Transmisija
+                        </div>
+                        <div id="Transmisija_cifra"><h5>@Model.Karakteristike.Transmisija</h5></div>
+                    </div>*@
+                </div>
+                <div id="Donji">
+                    <hr />
+                    <oblique>Detaljne informacije</oblique>
+                    <br /><br />
+                    <div id="lijevi">
+                        <div id="polje">
+                            <label style="float: left;">Proizvodjac</label>
+                            <oblique style="float: right; font-weight: 500;">@Model.Proizvodjac</oblique>
+                        </div>
+                        <br />
+                        <br />
+                        <div id="polje">
+                            <label style="float: left;">Model</label>
+                            <oblique style="float: right; font-weight: 500;">@Model.Model</oblique>
+                        </div>
+                        <br />
+                        <br />
+                        <div id="polje">
+                            <label style="float: left;">Kategorija</label>
+                            <oblique style="float: right; font-weight: 500;">@Model.Kategorija</oblique>
+                        </div>
+                        <br />
+                        <br />
+                        <div id="polje">
+                            <label style="float: left;">Boja</label>
+                            <oblique style="float: right; font-weight: 500;">@Model.Karakteristike.Boja</oblique>
+                        </div>
+                        <br />
+                        <br />
+                        <div id="polje">
+                            <label style="float: left;">Kilometraza</label>
+                            <oblique style="float: right; font-weight: 500;">@Model.Karakteristike.Kilometraza</oblique>
+                        </div>
+                        <br />
+                        <br />
+                        <div id="polje">
+                            <label style="float: left;">Motor</label>
+                            <oblique style="float: right; font-weight: 500;">@Model.Karakteristike.Motor</oblique>
+                        </div>
+                        <br />
+                        <br />
+                        <div id="polje">
+                            <label style="float: left;">Pogon</label>
+                            <oblique style="float: right; font-weight: 500;">@Model.Karakteristike.Pogon</oblique>
+                        </div>
+                    </div>
+                    <div id="desni">
+                        <div id="polje">
+                            <label style="float: left;">Broj vrata</label>
+                            <oblique style="float: right; font-weight: 500;">@Model.Karakteristike.BrojVrata</oblique>
+                        </div>
+                        <br />
+                        <br />
+                        <div id="polje">
+                            <label style="float: left;">Godiste</label>
+                            <oblique style="float: right; font-weight: 500;">@Model.Karakteristike.Godiste</oblique>
+                        </div>
+                        <br />
+                        <br />
+                        <div id="polje">
+                            <label style="float: left;">Gorivo</label>
+                            <oblique style="float: right; font-weight: 500;">@Model.Karakteristike.Gorivo</oblique>
+                        </div>
+                        <br />
+                        <br />
+                        <div id="polje">
+                            <label style="float: left;">Snaga</label>
+                            <oblique style="float: right; font-weight: 500;">@Model.Karakteristike.Snaga kw</oblique>
+                        </div>
+                        <br />
+                        <br />
+                        <div id="polje">
+                            <label style="float: left;">Transmisija</label>
+                            <oblique style="float: right; font-weight: 500;">@Model.Karakteristike.Transmisija</oblique>
+                        </div>
+                        <br />
+                        <br />
+                        <div id="polje">
+                            <label style="float: left;">Svjetla</label>
+                            <oblique style="float: right; font-weight: 500;">@Model.Karakteristike.Svjetla</oblique>
+                        </div>
+                        <br />
+                        <br />
+                        @if (@Model.Karakteristike.Zapremina != null)
+                        {
+                            <div id="polje">
+                                <label style="float: left;">Zapremina</label>
+                                <oblique style="float: right; font-weight: 500;">@Model.Karakteristike.Zapremina</oblique>
+                            </div>
+                        }
+                    </div>
+                    <div id="oprema">
+                        <hr />
+                        <oblique>Dodatna oprema</oblique>
+                        <br /><br />
+                        <h6>Paket opreme</h6>
+                        <h5 style="text-underline-position:auto">@Model.PaketOpreme</h5>
+                        <hr />
+                        @foreach (var x in Model.ListaOpreme)
+                        {
+                            <h6>@x.OpisOpreme </h6>
+                        }
+                        @if (signInManager.IsSignedIn(User) && (User.IsInRole("Uposlenik") || User.IsInRole("Admin")))
+                        {
+                            @if ((await authorizationService.AuthorizeAsync(User, "UređivanjePolicy")).Succeeded)
+                            {
+                            @if (!Model.Obrisan)
+                            {
+                                <div>
+                                    <a id="dugmeUrediOpremu" class="btn btn-light" asp-action="UrediOpremu" asp-route-Id="@Id" asp-route-AutomobilID="@Model.AutomobilID">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                        </svg> <b> Oprema</b>
+                                    </a>
+                                </div>
+                            }
+                            else
+                            {
+                                <div>
+                                    <a id="dugmeUrediOpremu" class="btn btn-outline-secondary">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-slash-circle" viewBox="0 0 16 16">
+                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                            <path d="M11.354 4.646a.5.5 0 0 0-.708 0l-6 6a.5.5 0 0 0 .708.708l6-6a.5.5 0 0 0 0-.708z" />
+                                        </svg> <b> Oprema</b>
+                                    </a>
+                                </div>
+                            }
+                           }
+                         }
+                    </div>
+                </div>
+            </div>
+            <div id="slikaidugme">
+                <div id="Slika1">
+                    <img src="~/Images/@Model.Slika1" alt="" />
+                </div>
+                <div id="Slika2">
+                    <img src="~/Images/@Model.Slika2" alt="" />
+                </div>
+                <div id="Slika3">
+                    <img src="~/Images/@Model.Slika3" alt="" />
+                </div>
+                <div id="Slika4">
+                    <img src="~/Images/@Model.Slika4" alt="" />
+                </div>
+                <div id="Slika5">
+                    <img src="~/Images/@Model.Slika5" alt="" />
+                </div>
+                @if (signInManager.IsSignedIn(User) && User.IsInRole("Korisnik"))
+                {
+                    <div id="dugme">
+                        @if (rezervacija == "da")
+                        {
+                            <a id="dugmic3" class="btn btn-secondary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-slash-circle" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                    <path d="M11.354 4.646a.5.5 0 0 0-.708 0l-6 6a.5.5 0 0 0 .708.708l6-6a.5.5 0 0 0 0-.708z" />
+                                </svg> <b>Zahtjev za rezervaciju vozila je u obradi!</b>
+                            </a>
+                        }
+                        else if (pronadjen == "ne")
+                        {
+                            <a id="dugmic" class="btn btn-success" asp-action="DodajUKorpu" asp-route-AutomobilID="@Model.AutomobilID" asp-route-Id="@Id">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                </svg> <b>Dodaj u korpu za rezervaciju</b>
+                            </a>
+                        }
+                        else
+                        {
+                            <a id="dugmic2" class="btn btn-danger" asp-action="IzbaciIzKorpe" asp-route-AutomobilID="@Model.AutomobilID" asp-route-Id="@Id">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                    <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
+                                </svg> <b>Ukloni iz korpe za rezervaciju</b>
+                            </a>
+                        }
+                    </div>
+                    <div id="notifikacija">
+                        @if (znak == "znak")
+                        {
+                            <div id="info" style="display: none; float:left; width: 100%; text-align: center" class="alert alert-success" role="alert">
+                                <b>Automobil je uspjesno DODAN u korpu!</b>
+                            </div>
+                        }
+                        else if (znak2 == "znak2")
+                        {
+                            <div id="info2" style="display: none; float: left; width: 100%; text-align: center" class="alert alert-success" role="alert">
+                                <b>Automobil je uspjesno UKLONJEN iz korpe!</b>
+                            </div>
+                        }
+                    </div>
+                }
+                else if(signInManager.IsSignedIn(User) && (User.IsInRole("Uposlenik") || User.IsInRole("Admin")))
+                {
+            <div id="dugmici">
+                @if (!Model.Obrisan)
+                {
+                    @if ((await authorizationService.AuthorizeAsync(User, "UređivanjePolicy")).Succeeded && !(await authorizationService.AuthorizeAsync(User, "BrisanjePolicy")).Succeeded)
+                    {
+                        <div>
+                            <a id="dugmeUrediBezBrisanja" class="btn btn-light" asp-action="UrediAutomobil" asp-route-Id="@Id" asp-route-AutomobilID="@Model.AutomobilID">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                </svg> <b> Uredi</b>
+                            </a>
+                        </div>
+                        @*<div>
+                    <a id="dugmeUredi" class="btn btn-light" asp-action="UrediAutomobil" asp-route-Id="@Id" asp-route-AutomobilID="@Model.AutomobilID">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                        </svg> <b> Uredi</b>
+                    </a>
+                </div>*@
+                    }
+                    @if ((await authorizationService.AuthorizeAsync(User, "BrisanjePolicy")).Succeeded && !(await authorizationService.AuthorizeAsync(User, "UređivanjePolicy")).Succeeded)
+                    {
+                        <div>
+                            <a id="dugmeObrisiBezUredjivanja" class="btn btn-danger" asp-action="ObrisiAutomobil" asp-route-Id="@Id" asp-route-AutomobilID="@Model.AutomobilID">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                    <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
+                                </svg> <b> Obriši</b>
+                            </a>
+                        </div>
+                    }
+                    @if ((await authorizationService.AuthorizeAsync(User, "BrisanjePolicy")).Succeeded && (await authorizationService.AuthorizeAsync(User, "UređivanjePolicy")).Succeeded)
+                    {
+                        <div>
+                            <a id="dugmeUredi" class="btn btn-light" asp-action="UrediAutomobil" asp-route-Id="@Id" asp-route-AutomobilID="@Model.AutomobilID">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                </svg> <b> Uredi</b>
+                            </a>
+                        </div>
+                        <div>
+                            <a id="dugmeObrisi" class="btn btn-danger" asp-action="ObrisiAutomobil" asp-route-Id="@Id" asp-route-AutomobilID="@Model.AutomobilID">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                    <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
+                                </svg> <b> Obrisi</b>
+                            </a>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div>
+                        <a id="dugmeUredi" style="width: 100%;" class="btn btn-outline-secondary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-slash-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                <path d="M11.354 4.646a.5.5 0 0 0-.708 0l-6 6a.5.5 0 0 0 .708.708l6-6a.5.5 0 0 0 0-.708z" />
+                            </svg> <b> Završeno!</b>
+                        </a>
+                    </div>
+                }
+            </div>
+                    @if (AutoJeDodano == "AutoJeDodano")
+                    {
+                        <div id="info3" style="display: none; float:left; width: 100%; text-align: center" class="alert alert-success" role="alert">
+                            <b>Automobil je uspjesno DODAN!</b>
+                        </div>
+                    }
+                    @if (AutoJeUredjeno == "AutoJeUredjeno")
+                    {
+                        <div id="info4" style="display: none; float:left; width: 100%; text-align: center" class="alert alert-success" role="alert">
+                            <b>Automobil je uspješno uređen!</b>
+                        </div>
+                    }
+                    @if (AutoObrisan == "AutoObrisan")
+                    {
+                        <div id="info5" style="display: none; float:left; width: 100%; text-align: center" class="alert alert-success" role="alert">
+                            <b>Automobil je uspjesno OBRISAN!</b>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    $(document).ready(function () {
+        $('#dugmic3').prop('disabled', true);
+
+        if ($("#znak").val("znak")) {
+            $("#info").show("fast");
+            setTimeout(function () {
+                $("#info").hide("slow");
+            }, 5000);
+        };
+
+        if ($("#znak2").val("znak2")) {
+            $("#info2").show("fast");
+            setTimeout(function () {
+                $("#info2").hide("slow");
+            }, 5000);
+        };
+
+        if ($("#AutoJeDodano").val("AutoJeDodano")) {
+            $("#info3").show("fast");
+            setTimeout(function () {
+                $("#info3").hide("slow");
+            }, 5000);
+        };
+
+        if ($("#AutoJeUredjeno").val("AutoJeUredjeno")) {
+            $("#info4").show("fast");
+            setTimeout(function () {
+                $("#info4").hide("slow");
+            }, 5000);
+        };
+
+        if ($("#AutoObrisan").val("AutoObrisan")) {
+            $("#info5").show("fast");
+            setTimeout(function () {
+                $("#info5").hide("slow");
+            }, 5000);
+        };
+
+        $("#Slika2").hide();
+        $("#Slika3").hide();
+        $("#Slika4").hide();
+        $("#Slika5").hide();
+    });
+
+    $("#sl1").hover(function () {
+        $("#Slika1").show();
+        $("#Slika2").hide();
+        $("#Slika3").hide();
+        $("#Slika4").hide();
+        $("#Slika5").hide();
+    });
+
+    $("#sl2").hover(function () {
+        $("#Slika1").hide();
+        $("#Slika2").show();
+        $("#Slika3").hide();
+        $("#Slika4").hide();
+        $("#Slika5").hide();
+    });
+
+    $("#sl3").hover(function () {
+        $("#Slika1").hide();
+        $("#Slika2").hide();
+        $("#Slika3").show();
+        $("#Slika4").hide();
+        $("#Slika5").hide();
+    });
+
+    $("#sl4").hover(function () {
+        $("#Slika1").hide();
+        $("#Slika2").hide();
+        $("#Slika3").hide();
+        $("#Slika4").show();
+        $("#Slika5").hide();
+    });
+
+    $("#sl5").hover(function () {
+        $("#Slika1").hide();
+        $("#Slika2").hide();
+        $("#Slika3").hide();
+        $("#Slika4").hide();
+        $("#Slika5").show();
+    });
+</script>

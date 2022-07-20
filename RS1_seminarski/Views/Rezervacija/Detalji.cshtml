@@ -1,0 +1,34 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@using RS1_seminarski.Modelview
+
+@model RezervacijaDetaljiWM
+
+<h2> Detalji rezervacije </h2>
+
+Rezervacija br: @Model.RezervacijaID<br />
+Datum  :        @Model.DatumRezervacije.ToShortDateString()<br />
+Klijent:        @Model.ImePrezimeKlijenta
+
+
+<div id="D1" style="border: 1px solid red">
+
+    @*<a href="/Stavke/Dodaj?ID=@Model.RezervacijaID"> otvori </a>*@
+    
+</div>
+
+
+
+<script>
+
+    $.get("/Stavke/Dodaj?ID=" +@Model.RezervacijaID, function (d) {
+        $("#D1").html(d);
+    });
+
+
+
+</script>

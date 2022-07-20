@@ -1,0 +1,97 @@
+﻿@model IEnumerable<IdentityRole>
+
+@{
+    ViewData["Title"] = "Pregled uloga";
+    var UlogaJeAdmin = ViewData["UlogaJeAdmin"] as string;
+}
+
+<h2>Sve uloge</h2>
+
+@if (UlogaJeAdmin == "UlogaJeAdmin")
+{
+    <div id="info" style="display: none; width: 100%; text-align: center" class="alert alert-danger" role="alert">
+        <b>Nemoguće obrisati ulogu ADMIN!</b>
+    </div>
+}
+
+@if (Model.Any())
+{
+    <a class="btn btn-primary mb-3" style="width: auto" asp-controller="Administracija" asp-action="KreirajUlogu">Kreiraj novu ulogu</a>
+
+    foreach (var role in Model)
+    {
+        <div class="card mb-3">
+            <div class="card-header">
+                Uloga Id = @role.Id
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">
+                    @role.Name
+                </h5>
+            </div>
+            <div class="card-footer">
+                @if (role.Name == "Admin")
+                {
+                    <a class="btn btn-primary" asp-controller="Administracija" asp-action="UrediUlogu" asp-route-Id="@role.Id">Uredi</a>
+                }
+                else
+                {
+                    <form method="post" asp-controller="Administracija" asp-action="ObrisiUlogu" asp-route-Id="@role.Id">
+                        <a class="btn btn-primary" asp-controller="Administracija" asp-action="UrediUlogu" asp-route-Id="@role.Id">Uredi</a>
+
+                        <span id="PotvrdiBrisanjeSpan_@role.Id" style="display:none">
+                            <span>Da li zaista želite obrisati?</span>
+                            <button type="submit" class="btn btn-danger">Da</button>
+                            <a href="#" class="btn btn-primary" onclick="potvrdaBrisanja('@role.Id', false)">Ne</a>
+                        </span>
+
+                        <span id="BrisanjeSpan_@role.Id">
+                            <a href="#" class="btn btn-danger" onclick="potvrdaBrisanja('@role.Id', true)">Obrisi</a>
+                        </span>
+                    </form>
+                }
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div class="card">
+        <div class="card-header">
+            Nema kreiranih uloga
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                Klikni na dugme ispod da bi kreirao ulogu
+            </h5>
+            <a asp-controller="Administracija" asp-action="KreirajUlogu" class="btn btn-primary" style="width: auto">
+                Kreiraj ulogu
+            </a>
+        </div>
+    </div>
+}
+
+<script>
+    $(document).ready(function () {
+        if ($("#UlogaJeAdmin").val("UlogaJeAdmin")) {
+            $("#info").show("fast");
+            setTimeout(function () {
+                $("#info").hide("slow");
+            }, 5000);
+        };
+    });
+
+    function potvrdaBrisanja(uniqueId, isDeleteClicked) {
+        var BrisanjeSpan = 'BrisanjeSpan_' + uniqueId;
+        var PotvrdiBrisanjeSpan = 'PotvrdiBrisanjeSpan_' + uniqueId;
+
+        if (isDeleteClicked) {
+            $('#' + BrisanjeSpan).hide();
+            $('#' + PotvrdiBrisanjeSpan).show();
+        }
+        else {
+            $('#' + BrisanjeSpan).show();
+            $('#' + PotvrdiBrisanjeSpan).hide();
+        }
+    }
+</script>

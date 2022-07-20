@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Dodavanje lozinke";
+}
+
+@model RS1_seminarski.Modelview.DodajLozinkuVM
+
+<div id="result">
+    <h2>Postavi lozinku</h2>
+    <hr />
+    <p class="text-info">
+        Logirali ste se preko vanjskog linka tako da nemate lokalni nalog/lozinku.
+        Jednostavno postavite novu lozinku ukoliko želite da budete u mogućnosti prijaviti se koristeći lokalni nalog.
+    </p>
+    <div class="row">
+        <div class="col-md-4">
+            <form method="post" asp-controller="Account" asp-action="DodajLozinku" ajax-poziv="da" ajax-rezultat="result">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <div>
+                        <input asp-for="@Model.Lozinka" placeholder="Nova lozinka" class="form-control" />
+                        <span asp-validation-for="@Model.Lozinka" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div>
+                        <input asp-for="@Model.PotvrdiLozinku" placeholder="Potvrdi novu lozinku" class="form-control" />
+                        <span asp-validation-for="@Model.PotvrdiLozinku" class="text-danger"></span>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success" style="width: auto">Postavi lozinku</button>
+            </form>
+        </div>
+    </div>
+</div>
+

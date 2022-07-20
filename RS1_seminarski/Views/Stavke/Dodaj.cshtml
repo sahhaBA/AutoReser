@@ -1,0 +1,44 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@using RS1_seminarski.Modelview
+
+@model StavkeRezervacijaUrediWM
+
+
+<div style="width:auto" class="col-md-4 col-md-offset-4">
+   
+
+    <form asp-action="Snimi" asp-controller="Stavke">
+
+        <div class="form-group">
+            <label>Rezervacija   ID : </label>
+            <div>
+                <input asp-for="RezervacijaID" class="form-control" />
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Cijena : </label>
+            <div>
+                <input asp-for="Cijena" class="form-control" value="@Model.Cijena"  />
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Model automobila  : </label>
+            <div>
+               <select asp-for="AutomobilID" asp-items="Model.StavkeAutomobili"> </select>
+
+            </div>
+        </div>
+
+
+        <input type="submit" class="form-control btn btn-primary" value="Snimi" />
+
+    </form>
+    
+</div>  

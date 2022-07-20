@@ -1,0 +1,53 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@using RS1_seminarski.Modelview
+
+
+@model OpremaPrikazWM
+
+<style>
+
+    #D2 {
+        display:inline-block;
+    }
+
+</style>
+
+
+<div class="text-center">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th> Oprema ID </th>
+                <th> Naziv paketa opreme  </th>
+                <th> Opis  </th>
+
+                <th> Akcija  </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var k in Model.OpremaRow)
+            {
+            <tr>
+                <td> @k.OpremaID</td>
+                <td> @k.PaketOpremeNaziv</td>
+                <td> @k.OpisOpreme</td>
+                <td>
+                    <a class="btn btn-primary" href="/Oprema/Uredi?ID=@k.OpremaID"> Uredi </a>|
+                    <a class="btn btn-danger" href="/Oprema/Obrisi?ID=@k.OpremaID"> Obrisi </a>
+                </td>
+            </tr>
+
+            }
+
+        </tbody>
+
+
+    </table>
+</div>
+<a href="/Oprema/Dodaj" class="btn btn-primary"> Dodaj</a> 
+ <a id="D2" href="/Home/Index" class="btn btn-primary"> Home </a>

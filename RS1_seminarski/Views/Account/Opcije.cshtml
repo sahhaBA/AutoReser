@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Opcije naloga";
+}
+
+<h2>Opcije</h2>
+<hr />
+<br />
+<style>
+    #sve {
+        width: 100%;
+        overflow: auto;
+    }
+
+    #lijevi {
+        width: 20%;
+        float: left;
+        height: auto;
+    }
+
+    #desni {
+        width: 75%;
+        float: right;
+        margin-right: 2%;
+    }
+
+    ul{
+        list-style-type: none;
+    }
+</style>
+
+<div id="sve">
+    <div id="lijevi">
+        <div class="container">
+            <div class="list-group">
+                <a class="list-group-item list-group-item-action tfa" asp-controller="Account" asp-action="UspostavaTFAkoda" ajax-poziv="da" ajax-rezultat="desni">2FA</a>
+                <a class="list-group-item list-group-item-action proloz" asp-controller="Account" asp-action="PromijeniLozinku" ajax-poziv="da" ajax-rezultat="desni">Promijeni lozinku</a>
+                <a class="list-group-item list-group-item-action odjava" asp-controller="Account" asp-action="LogOut" ajax-poziv="da" ajax-rezultat="desni">Odjavi se</a>
+            </div>
+        </div>
+    </div>
+    <div id="desni">
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $(".tfa").trigger('click');
+    });
+</script>

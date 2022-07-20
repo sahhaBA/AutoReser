@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "Obavijest";
+}
+
+@{
+    var SuccessTitle = ViewBag.SuccessTitle as string;
+    var SuccessMessage = ViewBag.SuccessMessage as string;
+    var ErrorTitle = ViewBag.ErrorTitle as string;
+    var DugmeZaLogin = ViewBag.DugmeZaLogin as string;
+}
+
+@if (ErrorTitle == null)
+{
+    <div class="text-center">
+        <h1 class="text-success">@SuccessTitle</h1>
+        <hr />
+        <img src="~/Images/success.png" style="height: 300px; width: 300px" />
+        @if (SuccessMessage != null)
+        {
+            <br />
+            <br />
+            <h6 class="text-success">@SuccessMessage</h6>
+        }
+        @if(DugmeZaLogin != null)
+        {
+            <br />
+            <br />
+            <h6>
+                Klikni na dugme <a class="btn btn-primary" asp-action="Index">Prijava</a> za prijavu
+            </h6>
+        }
+    </div>
+}
+else
+{
+    <div class="text-center">
+        <h1 class="text-danger">@ErrorTitle</h1>
+        <hr />
+        <img src="~/Images/no-access.png" style="height: 300px; width: 300px" />
+    </div>
+}

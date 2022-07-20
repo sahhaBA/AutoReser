@@ -1,0 +1,414 @@
+﻿@model RS1_seminarski.Modelview.DodajVoziloVM;
+@using RS1_seminarski.Helper;
+@using Podaci.Entiteti;
+
+@inject SignInManager<KorisnickiNalog> signInManager; 
+
+@{
+    ViewData["Title"] = "Dodavanje vozila";
+    var Id = ViewBag.Id;
+    var AutoNijeDodano = ViewData["AutoNijeDodano"] as string;
+    Layout = "~/Views/Shared/_LayoutDodajVozilo.cshtml";
+}
+
+<style>
+    body {
+        background-color: rgb(241,238,231);
+        display: flex;
+        flex-direction: column;
+    }
+
+    #gornji {
+        background-color: rgb(242,242,242);
+    }
+
+    #forma{
+        width: 100%;
+    }
+
+    #prvi{
+        width: 33.33333%;
+        float: left;
+    }
+
+    #drugi {
+        width: 33.33333%;
+        float: left;
+    }
+
+    #treci {
+        width: 33.33333%;
+        float: left;
+    }
+
+    #dugme {
+        width: auto;
+        float: right;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        color: white;
+    }
+
+    #icon{
+        margin-right: 3px;
+    }
+</style>
+
+<body>
+    <div id="sve">
+        <div id="gornji" class="text-center">
+            <h1 class="display-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                </svg> Dodavanje Vozila
+            </h1>
+            <hr />
+        </div>
+        <div id="donji">
+            <h2><span>Informacije</span></h2>
+            <br />
+            <form id="forma" asp-action="DodavanjeVozila" asp-controller="Home" enctype="multipart/form-data" method="post">
+                <div id="prvi">
+                    <h6><span>Osnovne informacije</span></h6>
+                    <hr />
+                    <div class="form-group">
+                        <label class="col-sm-6 col-form-label">
+                            Proizvodjac:
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" asp-for="@Model.Proizvodjac" class="form-control" />
+                            <span asp-validation-for="@Model.Proizvodjac" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-6 col-form-label">
+                            Model:
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" asp-for="@Model.Model" class="form-control" />
+                            <span asp-validation-for="@Model.Model" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-6 col-form-label">
+                            Sifra:
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" asp-for="@Model.SifraAutomobila" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-6 col-form-label">
+                            Zaliha:
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" value="" asp-for="@Model.Zaliha" class="form-control" />
+                            <span asp-validation-for="@Model.Zaliha" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-6 col-form-label">
+                            Kategorija:
+                        </label>
+                        <div class="col-sm-9">
+                            <select class="form-control kat" asp-items="@Model.Kategorija" asp-for="@Model.KategorijaID"></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-6 col-form-label">
+                            Nova kategorija:
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" required placeholder="Opcionalno" asp-for="@Model.NovaKategorija" class="form-control novakat" />
+                            <span asp-validation-for="@Model.NovaKategorija" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-6 col-form-label">
+                            Paket opreme:
+                        </label>
+                        <div class="col-sm-9">
+                            <select class="form-control" asp-items="@Model.PaketOpreme" asp-for="@Model.PaketOpremeID"></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-6 col-form-label">
+                            Porezna stopa:
+                        </label>
+                        <div class="col-sm-9">
+                            <select class="form-control ps" asp-items="@Model.PoreznaStopa" asp-for="@Model.PoreznaStopaID"></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-6 col-form-label">
+                            Nova porezna stopa:
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" required placeholder="Opcionalno" asp-for="@Model.NovaPoreznaStopa" class="form-control novaps" />
+                            <span asp-validation-for="@Model.NovaPoreznaStopa" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="drugi">
+                    <h6><span>Detaljne informacije</span></h6>
+                    <hr />
+                    <div class="form-group">
+                        <label class="col-sm-6 col-form-label">
+                            Stanje:
+                        </label>
+                        <div class="col-sm-9">
+                            <select class="form-control" asp-items="@Model.Karakteristike.Stanje" asp-for="@Model.Karakteristike.StanjeID"></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-6 col-form-label">
+                            Cijena (KM):
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" value="" asp-for="@Model.Karakteristike.Cijena" class="form-control" />
+                            <span asp-validation-for="@Model.Karakteristike.Cijena" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-6 col-form-label">
+                            Godiste:
+                        </label>
+                        <div class="col-sm-9">
+                            <select class="form-control" asp-items="@Model.Karakteristike.Godiste" asp-for="@Model.Karakteristike.GodisteID"></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-6 col-form-label">
+                            Kilometraza (km):
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" value="" asp-for="@Model.Karakteristike.Kilometraza" class="form-control" />
+                            <span asp-validation-for="@Model.Karakteristike.Kilometraza" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-6 col-form-label">
+                            Snaga (kw):
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" value="" asp-for="@Model.Karakteristike.Snaga" class="form-control" />
+                            <span asp-validation-for="@Model.Karakteristike.Snaga" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-6 col-form-label">
+                            Zapremina:
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" asp-for="@Model.Karakteristike.Zapremina" class="form-control" />
+                            <span asp-validation-for="@Model.Karakteristike.Zapremina" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-6 col-form-label">
+                            Motor:
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" asp-for="@Model.Karakteristike.Motor" class="form-control" />
+                            <span asp-validation-for="@Model.Karakteristike.Motor" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-6 col-form-label">
+                            Gorivo:
+                        </label>
+                        <div class="col-sm-9">
+                            <select class="form-control" asp-items="@Model.Karakteristike.Gorivo" asp-for="@Model.Karakteristike.GorivoID"></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-6 col-form-label">
+                            Broj vrata:
+                        </label>
+                        <div class="col-sm-9">
+                            <select class="form-control" asp-items="@Model.Karakteristike.BrojVrata" asp-for="@Model.Karakteristike.BrojVrataID"></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-6 col-form-label">
+                            Pogon:
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" asp-for="@Model.Karakteristike.Pogon" class="form-control" />
+                            <span asp-validation-for="@Model.Karakteristike.Pogon" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-6 col-form-label">
+                            Transmisija:
+                        </label>
+                        <div class="col-sm-9">
+                            <select class="form-control" asp-items="@Model.Karakteristike.Transmisija" asp-for="@Model.Karakteristike.TransmisijaID"></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-6 col-form-label">
+                            Boja:
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" asp-for="@Model.Karakteristike.Boja" class="form-control" />
+                            <span asp-validation-for="@Model.Karakteristike.Boja" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-6 col-form-label">
+                            Svjetla:
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" asp-for="@Model.Karakteristike.Svjetla" class="form-control" />
+                            <span asp-validation-for="@Model.Karakteristike.Svjetla" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="treci">
+                    <h6><span>Slike</span></h6>
+                    <hr />
+                    <div class="form-group">
+                        <label class="col-sm-6 col-form-label">
+                            Slika 1:
+                        </label>
+                        <div class="col-sm-9">
+                            <input asp-for="@Model.Slika1" accept="image/*" />
+                            <span asp-validation-for="@Model.Slika1" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-6 col-form-label">
+                            Slika 2:
+                        </label>
+                        <div class="col-sm-9">
+                            <input asp-for="@Model.Slika2" accept="image/*" />
+                            <span asp-validation-for="@Model.Slika2" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-6 col-form-label">
+                            Slika 3:
+                        </label>
+                        <div class="col-sm-9">
+                            <input asp-for="@Model.Slika3" accept="image/*" />
+                            <span asp-validation-for="@Model.Slika3" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-6 col-form-label">
+                            Slika 4:
+                        </label>
+                        <div class="col-sm-9">
+                            <input asp-for="@Model.Slika4" accept="image/*" />
+                            <span asp-validation-for="@Model.Slika4" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-6 col-form-label">
+                            Slika 5:
+                        </label>
+                        <div class="col-sm-9">
+                            <input asp-for="@Model.Slika5" accept="image/*" />
+                            <span asp-validation-for="@Model.Slika5" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div style="width: 100%;">
+                        <button class="btn btn-success" id="dugme">
+                            <svg id="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                            </svg> <b>Dodaj vozilo</b>
+                        </button>
+                    </div>
+                    <br />
+                    <br />
+                    <div style="width: 100%;">
+                        @if (AutoNijeDodano == "AutoNijeDodano")
+                        {
+                            <div id="info" style="display: none; float:left; width: 100%; text-align: center" class="alert alert-danger" role="alert">
+                                <b>Automobil NIJE dodan!</b>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <input type="datetime" hidden asp-for="@Model.DatumDodavanja" value="@Model.DatumDodavanja" />
+                <input type="text" hidden asp-for="@Model.UposlenikID" value="@Id" />
+            </form>
+        </div>
+    </div>
+</body>
+
+<script>
+    $(".novakat").focus(function () {
+        $(".kat").val("---");
+    });
+    $(".novakat").focusout(function () {
+        $(".novakat").prop('required', true);
+    });
+    $(".kat").change(function () {
+        $(".novakat").val("");
+
+        if ($(".kat").find(":selected").text() != "---") {
+            $(".novakat").prop('required', false);
+        }
+        else {
+            $(".novakat").prop('required', true);
+        }
+    });
+
+    $(".novaps").focus(function () {
+        $(".ps").val("---");
+    });
+    $(".novaps").focusout(function () {
+        $(".novaps").prop('required', true);
+    });
+    $(".ps").change(function () {
+        $(".novaps").val("");
+
+        if ($(".ps").find(":selected").text() != "---") {
+            $(".novaps").prop('required', false);
+        }
+        else {
+            $(".novaps").prop('required', true);
+        }
+    });
+
+    if ($("#AutoDodano").val("AutoDodano")) {
+        $("#info").show("fast");
+        setTimeout(function () {
+            $("#info").hide("slow");
+        }, 5000);
+    };
+</script>

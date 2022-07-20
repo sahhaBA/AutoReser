@@ -1,0 +1,26 @@
+﻿@model RS1_seminarski.Modelview.TwoFactorAuthentication 
+
+@{ 
+    var NetacanKod = ViewBag.NetacanKod as string;
+}
+
+<h2>Two-Factor Authentication Uključen</h2>
+
+<h5>Unesite 2FA kod kako biste se se logirali</h5>
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input type="hidden" asp-for="@Model.Email" value="@Model.Email" />
+            @if (NetacanKod == "da")
+            {
+                <h6 class="text-danger">Neispravan kod</h6>
+            }
+            <div class="form-group">
+                <input asp-for="@Model.Kod" placeholder="npr: 983124" class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-primary">Potvrdi</button>
+        </form>
+    </div>
+</div>

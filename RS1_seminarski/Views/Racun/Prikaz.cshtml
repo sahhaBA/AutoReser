@@ -1,0 +1,67 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@using RS1_seminarski.Modelview
+
+
+@model RacunPrikazWM
+
+
+
+
+    <style>
+
+        #D2 {
+            display: inline-block;
+        }
+    </style>
+
+
+
+
+
+
+    <div class="text-center">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+
+                    <th> Racun br  </th>
+                    <th> Rezervacija br </th>
+                    <th>  Datum racuna   </th>
+                    <th>   Klijent   </th>
+                    <td> Napomena </td>
+                    <th> Akcija </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var k in Model.RacunRows)
+                {
+                    <tr>
+
+                        <td> @k.RacunID</td>
+                        <td> @k.BrojRezervacije</td>
+                        <td> @k.DatumRacuna.ToShortDateString()</td>
+                        <td> @k.ImeKlijenta </td>
+                        <th> @k.Napomena</th>
+
+
+                        <td>
+                            <a class="btn btn-primary" href="/Racun/Uredi?ID=@k.RacunID"> Uredi </a>|
+                            <a class="btn btn-danger" href="/Racun/Obrisi?ID=@k.RacunID"> Obrisi </a>
+                        </td>
+                    </tr>
+
+                }
+
+            </tbody>
+
+
+        </table>
+    </div>
+    @*<a href="/Auto/Dodaj" class="btn btn-primary"> Dodaj</a>*@
+      <a  href="/Racun/KreirajRacune" class="btn btn-primary"> Fakturisi odobrene rezervacije  </a>
+    <a id="D2" href="/Home/Index" class="btn btn-primary"> Home </a>
